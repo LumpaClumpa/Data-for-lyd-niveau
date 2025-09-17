@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-from matplotlib import animation  # keep the module accessible
+from matplotlib import animation  
 from matplotlib import style
 
 style.use('fivethirtyeight')
