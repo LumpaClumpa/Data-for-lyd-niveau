@@ -1,7 +1,10 @@
 from socket import gethostname
 import sqlite3
-from flask import Flask, request, jsonify
-
+import random
+import json
+from time import time
+from random import random
+from flask import Flask, render_template, make_response, request, jsonify
 # Initialize Flask app
 app = Flask(__name__)
 
@@ -23,7 +26,18 @@ def initDB():
 
 @app.route('/')
 def home():
-    return "HELLO WORLD"
+    return "Hello, this is the Sound Level Monitoring API!"
+
+@app.route('/graf', methods=["GET", "POST"])
+def main():
+    return render_template('index.html')
+
+@app.route('/data', methods=["GET", "POST"])
+def data():
+    data = [time() * 1000, random() * 100]
+    response = make_response(json.dumps(data))
+    response.content_type = 'application/json'
+    return response
 
 @app.route('/items', methods=['POST'])
 def create_item():
