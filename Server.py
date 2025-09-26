@@ -28,6 +28,14 @@ def initDB():
 def home():
     return "Hello, this is the Sound Level Monitoring API!"
 
+@app.route('/arduino', methods=['POST'])
+def receive_from_arduino():
+    data = request.get_json()
+    if not data:
+        return jsonify({'error': 'No JSON received'}), 400
+    # Process the data as needed
+    return jsonify({'status': 'success', 'received': data}), 200
+
 @app.route('/graf', methods=["GET", "POST"])
 def main():
     return render_template('index.html')
