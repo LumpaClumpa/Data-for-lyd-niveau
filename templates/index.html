@@ -48,6 +48,13 @@
 
 
     <script>
+        
+        Highcharts.setOptions({
+            time: {
+            useUTC: false
+            }
+        });
+        
         var chart;
 
         function requestData()
@@ -90,7 +97,7 @@
                     minPadding: 0.2,
                     maxPadding: 0.2,
                     title: {
-                        text: 'Value',
+                        text: 'Lydstyrke',
                         margin: 80
                     }
                 },
