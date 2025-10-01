@@ -31,10 +31,16 @@ def home():
 @app.route('/arduino', methods=['POST'])
 def receive_from_arduino():
     data = request.get_json()
+    print(data)
     if not data:
         return jsonify({'error': 'No JSON received'}), 400
     # Process the data as needed
     return jsonify({'status': 'success', 'received': data}), 200
+# Ved ikke hvad det gør, men det skal hvist være her...
+if __name__ == '__main__':
+    initDB()
+    app.run(host='0.0.0.0', port=5000, debug=True)
+
 
 @app.route('/graf', methods=["GET", "POST"])
 def main():
