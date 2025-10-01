@@ -46,15 +46,13 @@
     </div>
 
 
-
     <script>
-        
         Highcharts.setOptions({
             time: {
             useUTC: false
             }
         });
-        
+
         var chart;
 
         function requestData()
@@ -66,13 +64,13 @@
             var tm = requests.done(function (result)
             {
                 var series = chart.series[0],
-                    shift = series.data.length > 20;
+                    shift = series.data.length > 60;
 
                 // add the point
                 chart.series[0].addPoint(result, true, shift);
 
                 // call it again after one second
-                setTimeout(requestData, 2000);
+                setTimeout(requestData, 60000);
             });
         }
 
@@ -86,7 +84,7 @@
                     }
                 },
                 title: {
-                    text: 'Live random data'
+                    text: 'Live data fra lokale 221'
                 },
                 xAxis: {
                     type: 'datetime',
@@ -102,7 +100,7 @@
                     }
                 },
                 series: [{
-                    name: 'Random data',
+                    name: 'lydniveau',
                     data: []
                 }]
             });
