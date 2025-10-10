@@ -34,12 +34,28 @@ def receive_from_arduino():
     print(data)
     if not data:
         return jsonify({'error': 'No JSON received'}), 400
-    # Process the data as needed
+
+    # Extract fields from JSON
+    lokale = data.get('lokale')
+    sensorID = data.get('sensorID')
+    dB = data.get('dB')
+
+    # Validate input
+    if not all([lokale, sensorID, dB]):
+        return jsonify({'error': 'Missing fields'}), 400
+
+    # Insert into maalinger table
+    conn = sqlite3.connect('LD.db')
+    cursor = conn.cursor()
+    cursor.execute(
+        "INSERT INTO maalinger (lokale, sensorID, dB) VALUES (?, ?, ?)",
+        (lokale, sensorID, dB)
+    )
+    conn.commit()
+    conn.close()
+
     return jsonify({'status': 'success', 'received': data}), 200
-# Ved ikke hvad det gør, men det skal hvist være her...
-if __name__ == '__main__':
-    initDB()
-    app.run(host='0.0.0.0', port=5000, debug=True)
+
 
 
 @app.route('/graf', methods=["GET", "POST"])
