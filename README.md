@@ -5,6 +5,9 @@
 * En server som kan modtage data
 * En graf som kan vise data
 
+### Hvad det kan i mere dybde
+Når serven er uppe, tager den data fra en adroino som indsamler lydniveau data. Denne data vil så blive vist på en graf, så man kan få et bedre overblik over dataen. 
+
 ## FLowcharts
 Flowchart over arduino 
 ><img width="250" src="https://github.com/LumpaClumpa/Data-for-lyd-niveau/blob/main/Flowcharts/Arduino%20flowchart.drawio.png" />
@@ -14,6 +17,9 @@ Flowchart over server
 ><img width="250" src="https://github.com/LumpaClumpa/Data-for-lyd-niveau/blob/main/Flowcharts/Server_Flowchart.drawio.png" />
 Tabel over data 
 ><img width="250" src="https://github.com/LumpaClumpa/Data-for-lyd-niveau/blob/main/Flowcharts/TabelOverData.png" />
+
+## Virker ikke endnu
+* At den korrekte data er inde på grafen
 
 
 ## Links
