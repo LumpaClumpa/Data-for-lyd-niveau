@@ -2,6 +2,8 @@
 
 ## Oversigt over hvad projektet kan
 
+*En server som kan modtage data
+*En graf som kan vise data
 
 ## FLowcharts
 Flowchart over arduino 
