@@ -20,6 +20,7 @@ Tabel over data
 
 ## Virker ikke endnu
 * At den korrekte data er inde på grafen
+* Flowchart over serveren er basret på et andet libary - dette bliver fixet
 
 
 ## Links
