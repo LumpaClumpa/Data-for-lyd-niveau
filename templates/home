@@ -14,7 +14,7 @@
   </style>
 </head>
 <body>
-  <h1 style="text-align:center">Hello, this is the Sound Level Monitoring API!</h1>
+  <h1 style="text-align:center">Hej, det her er en lydniveau målning API!</h1>
   <div class="row" style="justify-content:center; margin-top:2rem;">
     <a class="button" href="{{ url_for('graf') }}">GRAF</a>
     <a class="button" href="{{ url_for('list_thresholds') }}">DATA</a>
