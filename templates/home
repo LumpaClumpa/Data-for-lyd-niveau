@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sound Level Monitoring API</title>
+  <style>
+    body { font-family: ui-sans-serif, system-ui; margin: 2rem; }
+    .row { display: flex; gap: 1rem; }
+    a.button {
+      display: inline-block; padding: .75rem 1.25rem; border-radius: .5rem;
+      text-decoration: none; border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <h1 style="text-align:center">Hello, this is the Sound Level Monitoring API!</h1>
+  <div class="row" style="justify-content:center; margin-top:2rem;">
+    <a class="button" href="{{ url_for('graf') }}">GRAF</a>
+    <a class="button" href="{{ url_for('list_thresholds') }}">DATA</a>
+  </div>
+</body>
+</html>
