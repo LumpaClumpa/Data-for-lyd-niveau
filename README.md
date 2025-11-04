@@ -2,7 +2,7 @@
 
 ## Oversigt over hvad projektet kan
 
-* En server som kan modtage data
+* En server som kan modtage og sende data
 * En graf som kan vise data
 
 ### Hvad det kan i mere dybde
