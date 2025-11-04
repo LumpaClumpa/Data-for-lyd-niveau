@@ -12,9 +12,6 @@ DB_PATH = "LD.db"
 def init_db():
     conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
-    # Readings table
-  
-    # Seed one threshold if none exist
     cur.execute("SELECT COUNT(*) FROM thresholds")
     if cur.fetchone()[0] == 0:
         cur.execute("INSERT INTO thresholds (lokale, maxDB) VALUES (?, ?)", (221, 60.0))
@@ -23,7 +20,6 @@ def init_db():
 
 @app.route("/")
 def home():
-    # templates/home.html must exist
     return render_template("home.html")
 
 @app.route("/arduino", methods=["POST"])
@@ -36,18 +32,15 @@ def receive_from_arduino():
 
 @app.route("/graf", methods=["GET"])
 def graf():
-    # templates/index.html must exist
     return render_template("index.html")
 
 @app.route("/data", methods=["GET"])
 def get_data():
-    # Throttle on client side; this just returns a point
     payload = [int(time() * 1000), random() * 100]
     resp = make_response(json.dumps(payload))
     resp.content_type = "application/json"
     return resp
 
-# Thresholds API (consistent!)
 @app.route("/thresholds", methods=["GET"])
 def list_thresholds():
     conn = sqlite3.connect(DB_PATH)
@@ -78,5 +71,5 @@ def upsert_threshold():
 
 if __name__ == "__main__":
     init_db()
-    # Avoid auto-reloader spawning duplicates in some environments
+    #Avoid auto-reloader spawning duplicates in some environments
     app.run(host="0.0.0.0", port=5000, debug=False)
