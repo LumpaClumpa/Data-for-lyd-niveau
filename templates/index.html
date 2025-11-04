@@ -42,25 +42,17 @@
 
   <script>
     Highcharts.setOptions({
-      time: {
-        useUTC: false
-      }
+      time: { useUTC: false }
     });
 
     var chart;
 
     function requestData() {
-      // Ajax call to get data from Flask
-      var requests = $.get('/data');
+      $.get('/data').done(function(result) {
+        var series = chart.series[0];
+        chart.series[0].addPoint(result, true, false);
 
-      var tm = requests.done(function(result) {
-        var series = chart.series[0],
-            shift = series.data.length > 60;
-
-        // add the point
-        chart.series[0].addPoint(result, true, shift);
-
-        // call it again after one minute
+        // Call again after one minute
         setTimeout(requestData, 60000);
       });
     }
@@ -70,17 +62,12 @@
         chart: {
           renderTo: 'data-container',
           defaultSeriesType: 'spline',
-          events: {
-            load: requestData
-          }
+          events: { load: requestData }
         },
-        title: {
-          text: 'Live data fra lokale 221'
-        },
+        title: { text: 'Live data fra lokale 221' },
         xAxis: {
           type: 'datetime',
           tickPixelInterval: 150,
-          maxZoom: 20 * 1000,
           labels: {
             formatter: function() {
               return Highcharts.dateFormat('%H:%M', this.value);
