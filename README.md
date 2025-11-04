@@ -6,7 +6,7 @@
 * En graf som kan vise data
 
 ### Hvad det kan i mere dybde
-Når serven er uppe, tager den data fra en adroino som indsamler lydniveau data. Denne data vil så blive vist på en graf, så man kan få et bedre overblik over dataen. 
+Når serven er oppe, tager den data fra en adroino som indsamler lydniveau data. Denne data vil så blive vist på en graf, så man kan få et bedre overblik over dataen. 
 
 ## FLowcharts
 Flowchart over arduino 
