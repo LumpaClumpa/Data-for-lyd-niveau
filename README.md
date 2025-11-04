@@ -16,7 +16,7 @@ Flowchart over network
 Flowchart over server
 ><img width="250" src="https://github.com/LumpaClumpa/Data-for-lyd-niveau/blob/main/Flowcharts/Server_Flowchart.drawio.png" />
 Tabel med Normalformer 
-><img width="250" src="https://github.com/LumpaClumpa/Data-for-lyd-niveau/blob/main/Screenshot 2025-10-27 at 11.29.32.png" />
+><img width="250" src="https://github.com/LumpaClumpa/Data-for-lyd-niveau/blob/main/Flowcharts/Normalformer.png" />
 
 ## Virker ikke endnu
 * At den korrekte data er inde på grafen
