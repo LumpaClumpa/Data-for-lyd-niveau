@@ -12,6 +12,12 @@ DB_PATH = "LD.db"
 def init_db():
     conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
+    # create threshold table
+    cur.execute("""CREATE TABLE IF NOT EXISTS thresholds (lokale INTEGER PRIMARY KEY,maxDB REAL)""")
+    # create maalinger (measurements) table
+    cur.execute("""CREATE TABLE IF NOT EXISTS maalinger (id INTEGER PRIMARY KEY AUTOINCREMENT,ts INTEGER,lokale INTEGER,db REAL)""")
+
+    # ensure at least one threshold exists
     cur.execute("SELECT COUNT(*) FROM thresholds")
     if cur.fetchone()[0] == 0:
         cur.execute("INSERT INTO thresholds (lokale, maxDB) VALUES (?, ?)", (221, 60.0))
@@ -27,19 +33,35 @@ def receive_from_arduino():
     data = request.get_json(silent=True)
     if not data:
         return jsonify({"error": "No JSON received"}), 400
-    # TODO: validate & insert into maalinger if desired
-    return jsonify({"status": "success", "received": data}), 200
+    # expected JSON: { "lokale": 2221, "db": 55.2 }
+    try:
+        lokale = int(data.get("lokale"))
+        db_val = float(data.get("db"))
+    except (TypeError, ValueError):
+        return jsonify({"error": "Invalid payload, expected 'lokale' and 'db'"}), 400
+    ts = int(time() * 1000)
+    conn = sqlite3.connect(DB_PATH)
+    cur = conn.cursor()
+    cur.execute("INSERT INTO maalinger (ts, lokale, db) VALUES (?, ?, ?)", (ts, lokale, db_val))
+    conn.commit()
+    conn.close()
+    return jsonify({"status": "ok", "lokale": lokale, "db": db_val, "ts": ts}), 201
 
 @app.route("/graf", methods=["GET"])
 def graf():
     return render_template("index.html")
 
-@app.route("/data", methods=["GET"])
-def get_data():
-    payload = [int(time() * 1000), random() * 100]
-    resp = make_response(json.dumps(payload))
-    resp.content_type = "application/json"
-    return resp
+@app.route("/maalinger/<int:lokale>", methods=["GET"])
+def maalinger_for_lokale(lokale):
+    # return last 500 measurements as array of [ts, db]
+    conn = sqlite3.connect(DB_PATH)
+    cur = conn.cursor()
+    cur.execute("SELECT ts, db FROM maalinger WHERE lokale = ? ORDER BY ts DESC LIMIT 500", (lokale,))
+    rows = cur.fetchall()
+    conn.close()
+    # return ordered ascending by timestamp
+    rows = list(reversed(rows))
+    return jsonify([[r[0], r[1]] for r in rows])
 
 @app.route("/thresholds", methods=["GET"])
 def list_thresholds():
@@ -58,7 +80,6 @@ def upsert_threshold():
         max_db = float(data.get("maxDB"))
     except (TypeError, ValueError):
         return jsonify({"error": "Expected JSON with integer 'lokale' and numeric 'maxDB'"}), 400
-
     conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
     cur.execute("""
@@ -71,5 +92,4 @@ def upsert_threshold():
 
 if __name__ == "__main__":
     init_db()
-    #Avoid auto-reloader spawning duplicates in some environments
     app.run(host="0.0.0.0", port=5000, debug=False)
