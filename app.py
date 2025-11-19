@@ -51,6 +51,14 @@ def receive_from_arduino():
 def graf():
     return render_template("index.html")
 
+@app.route("/data", methods=["GET"])
+def get_data():
+    payload = [int(time() * 1000), random() * 100]
+    resp = make_response(json.dumps(payload))
+    resp.content_type = "application/json"
+    return resp
+
+
 @app.route("/maalinger/<int:lokale>", methods=["GET"])
 def maalinger_for_lokale(lokale):
     # return last 500 measurements as array of [ts, db]
